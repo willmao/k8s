@@ -19,7 +19,7 @@ apt-get update && apt-get install -y docker-ce="$DOCKER_VERSION"
 
 echo '' > /etc/apt/apt.conf
 
-groupadd docker
+# groupadd docker
 
 usermod -aG docker $USER
 
