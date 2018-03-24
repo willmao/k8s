@@ -8,11 +8,11 @@ function set_proxy() {
 
     cat << EOF | sudo tee 1>/dev/null /etc/systemd/system/docker.service.d/http-proxy.conf
 [Service]
-Environment="HTTP_PROXY=$HTTP_PROXY"
+Environment="HTTP_PROXY=$HTTP_PROXY" "NO_PROXY=localhost,127.0.0.1"
 EOF
     cat << EOF | sudo tee 1>/dev/null /etc/systemd/system/docker.service.d/https-proxy.conf
 [Service]
-Environment="HTTPS_PROXY=$HTTP_PROXY"
+Environment="HTTPS_PROXY=$HTTP_PROXY" "NO_PROXY=localhost,127.0.0.1"
 EOF
 }
 

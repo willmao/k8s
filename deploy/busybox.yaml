@@ -1,0 +1,24 @@
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: busybox-deployment
+spec:
+  selector:
+    matchLabels:
+      app: busybox
+  replicas: 5 # tells deployment to run 2 pods matching the template
+  template: # create pods using pod definition in this template
+    metadata:
+      # unlike pod-nginx.yaml, the name is not included in the meta data as a unique name is
+      # generated from the deployment name
+      labels:
+        app: busybox
+    spec:
+      containers:
+      - name: busybox
+        image: busybox
+        ports:
+        - containerPort: 80
+        command: ["/bin/sh"]
+        args: ["-c", "while true; do echo hello; sleep 0.01;done"]
+---

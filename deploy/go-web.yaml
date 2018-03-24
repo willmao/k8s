@@ -2,42 +2,38 @@
 apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
 kind: Deployment
 metadata:
-  name: nginx-deployment
+  name: go-web-deployment
 spec:
   selector:
     matchLabels:
-      app: nginx
-  replicas: 2 # tells deployment to run 2 pods matching the template
+      app: go-web
+  replicas: 5 # tells deployment to run 2 pods matching the template
   template: # create pods using pod definition in this template
     metadata:
       # unlike pod-nginx.yaml, the name is not included in the meta data as a unique name is
       # generated from the deployment name
       labels:
-        app: nginx
+        app: go-web
     spec:
       containers:
-      - name: nginx
-        image: nginx:1.7.9
+      - name: go-web
+        image: alexwhen/docker-2048
         ports:
         - containerPort: 80
-        lifecycle:
-          preStop:
-            exec:
-              command: ['nginx', '-s', 'quit']
 ---
 kind: Service
 apiVersion: v1
 metadata:
-  name: my-web
+  name: go-web
 spec:
   selector:
-    app: nginx
+    app: go-web
   ports:
   - name: http
     protocol: TCP
     port: 80
     targetPort: 80
-    nodePort: 32334
+    nodePort: 32335
   type: NodePort
   externalIPs:
     - 192.168.0.101
